@@ -23,6 +23,9 @@ interface ChangeEmailViewModel {
         /** Emits the logged in user's email address.  */
         fun email(): Observable<String>
 
+        /** Emits a boolean that determines if a user's email address is verified. */
+        fun isEmailVerified(): Observable<Boolean>
+
         /** Emits a boolean that determines if a network call is in progress.  */
         fun showProgressBar(): Observable<Boolean>
 
@@ -44,6 +47,7 @@ interface ChangeEmailViewModel {
         private val updateEmail = PublishSubject.create<Pair<String, String>>()
 
         private val email = BehaviorSubject.create<String>()
+        private val isEmailVerified = BehaviorSubject.create<Boolean>()
         private val showProgressBar = BehaviorSubject.create<Boolean>()
         private val success = BehaviorSubject.create<Void>()
 
@@ -57,7 +61,9 @@ interface ChangeEmailViewModel {
                     .compose(bindToLifecycle())
                     .subscribe {
                         val email = it.me()?.email()
+                        val verified = it.me()?.isEmailVerified
                         this@ViewModel.email.onNext(email)
+                        this@ViewModel.isEmailVerified.onNext(verified)
                     }
 
             val updateEmailNotification = this.updateEmail
@@ -81,6 +87,8 @@ interface ChangeEmailViewModel {
         }
 
         override fun email(): Observable<String> = this.email
+
+        override fun isEmailVerified(): Observable<Boolean> = this.isEmailVerified
 
         override fun showProgressBar(): Observable<Boolean> = this.showProgressBar
 

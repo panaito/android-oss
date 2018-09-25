@@ -36,6 +36,14 @@ class ChangeEmailActivity : BaseActivity<ChangeEmailViewModel.ViewModel>() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { Toast.makeText(this, it, Toast.LENGTH_SHORT).show() }
 
+        this.viewModel.outputs.isEmailVerified()
+                .compose(bindToLifecycle())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    ViewUtils.setGone(email_verification_text_view, it)
+                    ViewUtils.setGone(resend_email_row, it)
+                }
+
         this.viewModel.outputs.showProgressBar()
                 .compose(bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
