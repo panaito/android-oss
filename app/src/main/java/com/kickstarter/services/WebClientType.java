@@ -6,4 +6,6 @@ import rx.Observable;
 
 public interface WebClientType {
   Observable<InternalBuildEnvelope> pingBeta();
+
+  Observable<Void> resendEmailVerification();
 }

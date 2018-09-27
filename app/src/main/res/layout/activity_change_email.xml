@@ -59,7 +59,6 @@
           android:layout_marginStart="@dimen/activity_horizontal_margin"
           android:layout_marginTop="@dimen/grid_1"
           android:text="@string/Email_unverified"
-          android:textAllCaps="true"
           android:textColor="@color/ksr_dark_grey_400"
           android:textSize="@dimen/caption_1" />
 
@@ -77,6 +76,7 @@
           android:layout_marginEnd="@dimen/activity_horizontal_margin"
           android:layout_marginStart="@dimen/activity_horizontal_margin"
           android:layout_marginTop="@dimen/grid_2"
+          android:textAllCaps="true"
           android:text="@string/Resend_verification_email"
           android:textColor="@color/ksr_green_700" />
 

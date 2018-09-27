@@ -261,7 +261,7 @@ public final class ApplicationModule {
   @NonNull
   static HttpLoggingInterceptor provideHttpLoggingInterceptor() {
     final HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-    interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+    interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
     return interceptor;
   }
 
@@ -277,7 +277,7 @@ public final class ApplicationModule {
   @WebRetrofit
   @NonNull
   static Retrofit provideWebRetrofit(@NonNull @WebEndpoint final String webEndpoint,
-    final @NonNull Gson gson,
+     @NonNull Gson gson,
     final @NonNull OkHttpClient okHttpClient) {
     return createRetrofit(webEndpoint, gson, okHttpClient);
   }

@@ -11,12 +11,16 @@ import com.kickstarter.ui.activities.ChangeEmailActivity
 import rx.Observable
 import rx.subjects.BehaviorSubject
 import rx.subjects.PublishSubject
+import timber.log.Timber
 
 interface ChangeEmailViewModel {
 
     interface Inputs {
         /** Call when update button has been clicked.  */
         fun updateEmailClicked(newEmail: String, currentPassword: String)
+
+        /** Call when Resend Row is clicked. */
+        fun resendEmailVerification()
     }
 
     interface Outputs {
@@ -44,6 +48,7 @@ interface ChangeEmailViewModel {
         val outputs: Outputs = this
         val errors: Errors = this
 
+        private val resendEmailVerification = PublishSubject.create<Void>()
         private val updateEmail = PublishSubject.create<Pair<String, String>>()
 
         private val email = BehaviorSubject.create<String>()
@@ -54,6 +59,7 @@ interface ChangeEmailViewModel {
         private val error = BehaviorSubject.create<String>()
 
         private val apolloClient: ApolloClientType = environment.apolloClient()
+        private val client = environment.webClient()
 
         init {
 
@@ -65,6 +71,7 @@ interface ChangeEmailViewModel {
                         this@ViewModel.email.onNext(email)
                         this@ViewModel.isEmailVerified.onNext(verified)
                     }
+
 
             val updateEmailNotification = this.updateEmail
                     .switchMap { updateEmail(it).materialize() }
@@ -80,6 +87,10 @@ interface ChangeEmailViewModel {
                     .subscribe({
                         emitData(it)
                     })
+        }
+
+        override fun resendEmailVerification() {
+            this.resendEmailVerification.onNext(null)
         }
 
         override fun updateEmailClicked(newEmail: String, currentPassword: String) {
@@ -99,6 +110,13 @@ interface ChangeEmailViewModel {
         private fun emitData(it: UpdateUserEmailMutation.Data) {
             this.email.onNext(it.updateUserAccount()?.user()?.email())
             this.success.onNext(null)
+        }
+
+         fun resendEmail() {
+            this.client.resendEmailVerification()
+                    .compose(bindToLifecycle())
+                    .doOnError { Timber.e("THIS ISNT WORKING $it.message") }
+                    .subscribe { Timber.d("success")  }
         }
 
         private fun updateEmail(emailAndPassword: Pair<String, String>): Observable<UpdateUserEmailMutation.Data> {

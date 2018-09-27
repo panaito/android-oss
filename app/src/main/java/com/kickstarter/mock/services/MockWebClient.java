@@ -12,4 +12,9 @@ public class MockWebClient implements WebClientType {
   public @NonNull Observable<InternalBuildEnvelope> pingBeta() {
     return Observable.empty();
   }
+
+  @Override
+  public Observable<Void> resendEmailVerification() {
+    return null;
+  }
 }
