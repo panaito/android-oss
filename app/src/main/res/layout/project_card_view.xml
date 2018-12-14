@@ -14,6 +14,7 @@
     card_view:cardCornerRadius="0dp"
     card_view:cardBackgroundColor="@color/transparent"
     card_view:cardElevation="@dimen/card_no_elevation"
+    android:stateListAnimator="@animator/card_press_elevation"
     android:foreground="@drawable/click_indicator_light"
     android:focusable="true"
     android:layout_marginBottom="@dimen/project_card_margin_bottom"
