@@ -17,11 +17,13 @@
     android:layout_marginTop="@dimen/project_card_margin_top"
     android:focusable="true"
     android:foreground="@drawable/click_indicator_light"
+    android:stateListAnimator="@animator/card_press_elevation"
     card_view:cardBackgroundColor="@color/transparent"
     card_view:cardCornerRadius="0dp"
     card_view:cardElevation="@dimen/card_no_elevation"
     card_view:cardPreventCornerOverlap="false"
-    card_view:cardUseCompatPadding="true">
+    card_view:cardUseCompatPadding="true"
+    tools:ignore="UnusedAttribute">
 
     <LinearLayout
       android:id="@+id/land_card_view_group"
